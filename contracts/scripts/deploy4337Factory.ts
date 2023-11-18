@@ -10,10 +10,10 @@ async function main() {
 
     console.log("Account balance:", (await deployer.getBalance()).toString());
 
-    const ContractFactory = await hre.ethers.getContractFactory("SimpleAccountFactory");
+    const ContractFactory = await hre.ethers.getContractFactory("OneSaveAccountFactory");
     const contract = await ContractFactory.deploy("0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789");
 
-    console.log("SimpleAccountFactory contract deployed to:", contract.address);
+    console.log("OneSaveAccountFactory contract deployed to:", contract.address);
 }
 
 main()

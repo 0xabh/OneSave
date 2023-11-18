@@ -4,22 +4,22 @@ pragma solidity ^0.8.12;
 import "@openzeppelin/contracts/utils/Create2.sol";
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 
-import "./SimpleAccount.sol";
+import "./OneSaveAccount.sol";
 
 /**
- * A factory contract for SimpleAccount
+ * A factory contract for OneSaveAccount
  * A UserOperations "initCode" holds the address of the factory, and a method call (to createAccount, in this factory).
  * The factory's createAccount returns the target account address even if it is already installed.
  * This way, the entryPoint.getSenderAddress() can be called either before or after the account is created.
  */
-contract SimpleAccountFactory {
-    SimpleAccount public immutable accountImplementation;
+contract OneSaveAccountFactory {
+    OneSaveAccount public immutable accountImplementation;
 
     address public factoryOwner;
 
     constructor(IEntryPoint _entryPoint) {
         factoryOwner = msg.sender;
-        accountImplementation = new SimpleAccount(_entryPoint);
+        accountImplementation = new OneSaveAccount(_entryPoint);
     }
 
     modifier onlyOwner() {
@@ -40,17 +40,17 @@ contract SimpleAccountFactory {
     function createAccount(
         address owner,
         uint256 salt
-    ) public returns (SimpleAccount ret) {
+    ) public returns (OneSaveAccount ret) {
         address addr = getAddress(owner, salt);
         uint codeSize = addr.code.length;
         if (codeSize > 0) {
-            return SimpleAccount(payable(addr));
+            return OneSaveAccount(payable(addr));
         }
-        ret = SimpleAccount(
+        ret = OneSaveAccount(
             payable(
                 new ERC1967Proxy{salt: bytes32(salt)}(
                     address(accountImplementation),
-                    abi.encodeCall(SimpleAccount.initialize, (owner))
+                    abi.encodeCall(OneSaveAccount.initialize, (owner))
                 )
             )
         );
@@ -71,7 +71,7 @@ contract SimpleAccountFactory {
                         type(ERC1967Proxy).creationCode,
                         abi.encode(
                             address(accountImplementation),
-                            abi.encodeCall(SimpleAccount.initialize, (owner))
+                            abi.encodeCall(OneSaveAccount.initialize, (owner))
                         )
                     )
                 )

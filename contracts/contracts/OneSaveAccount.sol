@@ -19,7 +19,7 @@ import "./callback/TokenCallbackHandler.sol";
  *  has execute, eth handling methods
  *  has a single signer that can send requests through the entryPoint.
  */
-contract SimpleAccount is
+contract OneSaveAccount is
     BaseAccount,
     TokenCallbackHandler,
     UUPSUpgradeable,

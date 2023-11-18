@@ -10,14 +10,14 @@ async function main() {
   console.log("Deploying contracts with the account:", deployer.address);
 
   // Deploy SimpleAccountFactory
-//   const factory = await hre.ethers.getContractAt(
-//     "SimpleAccountFactory",
-//     "0x256F1E9820aDEc785cff97F32A7d50ef5B1a7270"
-//   );
+  const factory = await hre.ethers.getContractAt(
+    "SimpleAccountFactory",
+    "0x875BF83eD9E4a85413dD5704b730013383A0F7a8"
+  );
   // deploy new factory
-    const factoryFactory = await hre.ethers.getContractFactory("SimpleAccountFactory");
-    const factory = await factoryFactory.deploy("0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789");
-    await factory.deployed();
+    // const factoryFactory = await hre.ethers.getContractFactory("SimpleAccountFactory");
+    // const factory = await factoryFactory.deploy("0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789");
+    // await factory.deployed();
   console.log("SimpleAccountFactory contract deployed to:", factory.address);
 
   // Create a new account

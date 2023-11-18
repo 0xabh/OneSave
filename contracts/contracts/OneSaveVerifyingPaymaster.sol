@@ -15,7 +15,7 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
  * - the paymaster checks a signature to agree to PAY for GAS.
  * - the account checks a signature to prove identity and account ownership.
  */
-contract SimpleVerifyingPaymaster is BasePaymaster {
+contract OneSaveVerifyingPaymaster is BasePaymaster {
 
     using ECDSA for bytes32;
     using UserOperationLib for UserOperation;
