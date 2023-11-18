@@ -3,6 +3,7 @@ import makeBlockie from "ethereum-blockies-base64";
 import { useAccount } from "wagmi";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Logo from "@/components/Logo";
 
 export default function Home() {
   const { address } = useAccount();
@@ -11,6 +12,9 @@ export default function Home() {
 
   return (
     <div className="bg-neutral-100 h-screen">
+        <div className="absolute left-5 top-3">
+            <Logo />
+        </div>
       <Navbar />
       <div className="flex flex-col items-center justify-center w-full">
         <div className=" border-4 border-black">
