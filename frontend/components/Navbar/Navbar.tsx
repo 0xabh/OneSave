@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <div className="flex justify-end p-5">
       <button
-        className="bg-transparent hover:bg-white-500 text-white font-semibold hover:text-white py-2 px-4 border border-white-500 hover:border-transparent rounded-none"
+        className="bg-transparent hover:bg-neutral-900 font-semibold hover:text-white py-2 px-4 border border-white-500 hover:border-transparent rounded-none"
         onClick={() => {
             (isConnected ? disconnect() : open())
         }}
