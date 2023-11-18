@@ -1,23 +1,136 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { ethers } from "ethers";
+import { useAccount } from "wagmi";
+import { useEthersSigner } from "utils/useEthersSigner";
+import oneSaveFactoryABI from "utils/oneSaveFactoryABI.json";
+import oneSaveABI from "utils/oneSaveABI.json";
+import { useRouter } from "next/router";
+import oneSaveNFTAbi from "utils/oneSaveNFTAbi.json";
+import { useEffect } from "react";
+import erc6551RegistryABI from "utils/erc6551RegistryABI.json";
+import erc6551ABI from "utils/erc6551ABI.json";
+import axios from "axios";
 
 const TokenForm = () => {
+  const router = useRouter();
   const [tokenName, setTokenName] = useState("");
   const [goalAmount, setGoalAmount] = useState<number>();
   const [endDate, setEndDate] = useState<string>();
   const [recoveryAddressCheck, setRecoveryAddressCheck] = useState(false);
   const [recoveryAddress, setRecoveryAddress] = useState<string>();
   const [inactivityPeriod, setInactivityPeriod] = useState<string>();
-
-  const handleSubmit = (event: any) => {
+  const { address } = useAccount();
+  const signer = useEthersSigner();
+  const [AA_address, setAA_address] = useState("");
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
+    await createVault();
+
+    // localStorage.setItem(
+    //   "vaultDetails",
+    //   JSON.stringify({
+    //     tokenName,
+    //     goalAmount,
+    //     endDate,
+    //     recoveryAddressCheck,
+    //     recoveryAddress,
+    //     inactivityPeriod,
+    //   })
+    // );
     console.log({
       tokenName,
       goalAmount,
       endDate,
       recoveryAddressCheck,
       recoveryAddress,
+    });
+  };
+  const createVault = async () => {
+    const AAContract = new ethers.Contract(
+      "0x2902eD2A71B56645761d0190cb7E8A615A86F20c",
+      oneSaveFactoryABI,
+      signer
+    );
+    const create2Address = await AAContract.getAddress(address, 0);
+    setAA_address(create2Address);
+    console.log("AA address:", create2Address);
+    const tx = await AAContract.createAccount(address, 0);
+    await tx.wait();
+    console.log("New account created at:", create2Address);
+
+    const simpleAccount = new ethers.Contract(
+      create2Address,
+      oneSaveABI,
+      signer
+    );
+
+    console.log("Owner:", await simpleAccount.owner());
+
+    // Deploy 6551 vault
+    await generateVault(create2Address);
+
+    const oneSaveNft = new ethers.Contract(
+      "0x2055Fef483E16db322a3D04ECe2454C5dc3b7E49",
+      oneSaveNFTAbi,
+      signer
+    );
+    // fetch balance of oneSaveNft.balanceOf(create2Address)
+    const nftBalance = await oneSaveNft.balanceOf(create2Address);
+
+    const tokenId = await oneSaveNft.tokenOfOwnerByIndex(create2Address, nftBalance.sub(1));
+    console.log("tokenId:", tokenId.toString());
+
+    const erc6551RegistryContract = new ethers.Contract(
+      "0x000000006551c19487814612e58FE06813775758",
+      erc6551RegistryABI,
+      signer
+    );
+
+    const tbaAddress = await erc6551RegistryContract.account(
+      "0x060b0F0364Bdb754c912f513A42924608657D78E",
+      ethers.utils.formatBytes32String(tokenId.toString()),
+      "137",
+      oneSaveNft.address,
+      0
+    );
+
+
+    console.log("TBA address:", tbaAddress);
+
+    const deployTba = await erc6551RegistryContract.createAccount(
+      tbaAddress,
+      ethers.utils.formatBytes32String(tokenId.toString()),
+      "137",
+      oneSaveNft.address,
+      0
+    );
+
+    await deployTba.wait();
+
+    const tbaContract = new ethers.Contract(tbaAddress, erc6551ABI, signer);
+    console.log("TBA contract deployed to:", tbaContract.address);
+    const data = {
+      id: tokenId,
+      tbaAddress: tbaAddress,
+      tokenName,
+      goalAmount,
+      endDate,
+      recoveryAddressCheck,
+      recoveryAddress,
+      inactivityPeriod,
+    };
+    const dataArr = JSON.parse(localStorage.getItem("vaultDetails") || "[]");
+    localStorage.setItem("vaultDetails", JSON.stringify([...dataArr, data]));
+
+    
+    router.push("/dashboard");
+  };
+
+  const generateVault = async (AA_address: string) => {
+    await axios.post("http://localhost:3000/api/createVault", {
+      address: AA_address,
     });
   };
 

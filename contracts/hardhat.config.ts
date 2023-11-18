@@ -100,8 +100,8 @@ const config: HardhatUserConfig = {
       // alfajores: process.env.CELOSCAN_API_KEY as string,
       scrollSepolia: process.env.SEPOLIA_API_KEY as string,
       mantleTest: process.env.MANTLE_API_KEY as string,
-      polygonMumbai: process.env.POLYGONSCAN_API_KEY as string,
-      // polygon: process.env.POLYGONSCAN_API_KEY as string,
+      // polygonMumbai: process.env.POLYGONSCAN_API_KEY as string,
+      polygon: process.env.POLYGONSCAN_API_KEY as string,
       baseGoerli: "PLACEHOLDER_STRING",
     },
     customChains: [
