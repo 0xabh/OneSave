@@ -51,28 +51,28 @@ export const calculateDifference = (data: any) => {
         return {
             tokenAddress: DAI.address,
             decimal: 18,
-            amountToSave: diff
+            amountToSave: Math.floor(diff / 100)
         };
     } else if(parseInt(oldUsdc) > parseInt(usdc.balance)) {
         const diff = parseInt(oldUsdc) - parseInt(usdc.balance);
         return {
             tokenAddress: USDC.address,
             decimal: 6,
-            amountToSave: diff
+            amountToSave: Math.floor(diff / 100)
         }
     } else if(parseInt(oldWbtc) > parseInt(wbtc.balance)) {
         const diff = parseInt(oldWbtc) - parseInt(wbtc.balance);
         return {
             tokenAddress: WBTC.address,
             decimal: 8,
-            amountToSave: diff
+            amountToSave: Math.floor(diff / 100)
         }
     } else if(parseInt(oldWeth) > parseInt(weth.balance)) {
         const diff = parseInt(oldWeth) - parseInt(weth.balance);
         return {
             tokenAddress: WETH.address,
             decimal: 18,
-            amountToSave: diff
+            amountToSave: Math.floor(diff / 100)
         
         }
     } else if(parseInt(oldNative) > parseInt(native.balance)) {

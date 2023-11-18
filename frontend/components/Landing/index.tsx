@@ -2,11 +2,12 @@ import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
-
+import { useDisconnect } from "wagmi";
 const Landing = () => {
   const { open, close } = useWeb3Modal();
   const { address, isConnected, status } = useAccount();
   const router = useRouter();
+  const { disconnect } = useDisconnect();
 
   useEffect(() => {
     if (status === "connected") {
@@ -30,7 +31,7 @@ const Landing = () => {
             className="my-5 p-2 border-white border text-white text-2xl font-normal font-sans"
             onClick={() => {
               // console.log("isConnected", isConnected)
-              isConnected ? close() : open();
+              isConnected ?  disconnect() : open();
             }}
           >
             {isConnected ? address : "Connect Wallet"}

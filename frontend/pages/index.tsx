@@ -1,7 +1,55 @@
+import AutoBalanceFetch from "@/components/AutoBalanceFetch.tsx";
+import Navbar from "@/components/Navbar/Navbar";
 import Head from "next/head";
 import Landing from "@/components/Landing";
+import { ethers } from "ethers";
+import { useAccount } from "wagmi";
+import { useEthersSigner } from "utils/useEthersSigner";
+import oneSaveFactoryABI from "utils/oneSaveFactoryABI.json";
+import oneSaveABI from "utils/oneSaveABI.json";
+import { useRouter } from "next/router";
+import oneSaveNFTAbi from "utils/oneSaveNFTAbi.json";
+import { useEffect } from "react";
 
 export default function Home() {
+  const { address } = useAccount();
+  const signer = useEthersSigner();
+  const router = useRouter();
+  const checkIfBalanceExists = async () => {
+    try {
+      const AAContract = new ethers.Contract(
+        "0x2902eD2A71B56645761d0190cb7E8A615A86F20c",
+        oneSaveFactoryABI,
+        signer
+      );
+      const create2Address = await AAContract.getAddress(address, 0);
+      const simpleAccount = new ethers.Contract(
+        create2Address,
+        oneSaveABI,
+        signer
+      );
+      console.log("Owner:", await simpleAccount.owner());
+      const oneSaveNft = new ethers.Contract(
+        "0x2055Fef483E16db322a3D04ECe2454C5dc3b7E49",
+        oneSaveNFTAbi,
+        signer
+      );
+      const nftBalance = await oneSaveNft.balanceOf(address);
+      console.log("nftBalance:", nftBalance.toString());
+      if (nftBalance.toString() == "0") {
+        router.push("/get-started");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      router.push("/get-started");
+    }
+  };
+  useEffect(() => {
+    if(!address) return;
+    checkIfBalanceExists();
+  }, [address]);
+
   return (
     <>
       <Head>
