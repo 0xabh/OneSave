@@ -1,5 +1,6 @@
+import AutoBalanceFetch from '@/components/AutoBalanceFetch.tsx';
 import Navbar from '@/components/Navbar/Navbar'
-import Head from 'next/head'
+import Head from 'next/head';
 
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       </Head>
       <main className='h-screen' style={{backgroundColor: '#101111'}}> 
        <Navbar />
+       <AutoBalanceFetch />
       </main>
       </>
   )
