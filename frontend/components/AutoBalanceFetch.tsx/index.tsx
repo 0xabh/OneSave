@@ -72,7 +72,7 @@ const AutoBalanceFetch = () => {
 
   return (
     <div>
-      <h1 className="">AutoBalanceFetch</h1>
+      {/* <h1 className="">AutoBalanceFetch</h1> */}
     </div>
   );
 };

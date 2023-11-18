@@ -18,8 +18,7 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="h-screen" style={{ backgroundColor: "#101111" }}>
-                <Navbar />
+            <main style={{ backgroundColor: "#101111" }}>
                 <AutoBalanceFetch />
                 <Landing />
             </main>

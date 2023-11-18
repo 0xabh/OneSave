@@ -12,7 +12,7 @@ const Landing = () => {
     if (status === "connected") {
       close();
       setTimeout(() => {
-        router.push("/get-started");
+        // router.push("/get-started");
       }, 1000);
     }
   }, [status]);

@@ -27,7 +27,7 @@ const TokenForm = () => {
   ];
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-4 w-1/2">
       <select
         value={tokenName}
         onChange={(e) => setTokenName(e.target.value)}
