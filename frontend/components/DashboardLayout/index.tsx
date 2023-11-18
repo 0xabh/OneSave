@@ -2,6 +2,7 @@ import makeBlockie from "ethereum-blockies-base64";
 import Navbar from "../Navbar/Navbar";
 import Image from "next/image";
 import { useAccount } from "wagmi";
+import Logo from "../Logo";
 
 const DashboardLayout = ({ children }) => {
   const { address } = useAccount();
@@ -9,7 +10,7 @@ const DashboardLayout = ({ children }) => {
   return (
     <div className="flex h-screen bg-neutral-100">
       <div className="w-1/6 border-r-2 bg-neutral-100 border-black p-4">
-        <div className="flex flex-col items-center justify-center w-full mt-20">
+        <div className="flex flex-col items-center justify-around w-full mt-20">
           <div className=" border-4 border-black">
             <Image
               width={80}
@@ -35,6 +36,9 @@ const DashboardLayout = ({ children }) => {
               Connect Wallet
             </p>
           )}
+          <div className="absolute bottom-5">
+            <Logo />
+          </div>
         </div>
       </div>
       <div className="flex bg-neutral-100 flex-col w-4/5">
