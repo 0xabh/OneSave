@@ -28,3 +28,25 @@ Since these savings vault are ERC 6551 token bound accounts they can be transfer
 
 The user retains access to the savings vault and funds at all times as all these 6551 token bound accounts are mapped to his 4337 compatible contract account and it can only be accessed by the owner who created it.
 
+# How its Made
+
+OneSave contract account and savings vault are built on top of ethInfitism’s 4337 Account Abstraction implementation and Quicknode’s 6551 resources respectively. The contract account is mapped to the user’s externally owned account while each saving vault is held as a token bound account. We use WalletConnect's web3Modal to allow our users to connect different wallets across multiple chains and networks.
+
+Since the contract account is the owner of the token bound accounts we can offer multiple advantages to the user which are not possible with a traditional EOA. Based on Vitailk’s talk at EthCC in Paris 2023 we have made our custom implementation of dead man’s switch to solve the inheritance problem in crypto. It also helps a user recover his funds in case he forgets the private key to his original externally owned account.
+
+We offer gas sponsorship and paymaster to our users by using Skandha bundler for userops. A user can continue to fill his vault with any of the supported ERC20s and OneSave will convert it to the default token of his savings vault. We use 1inch API to swap these tokens before sending them to the user’s saving vault.
+
+By using ERC 6551 we can make the saving vault as token bound accounts. These saving vaults can hold a single ERC20 token, a combination of multiple ERC20s or a ERC20 and ERC721 together. The advantage of using a ERC 6551 token bound account over a traditional vault is that this saving vault can be redeemed partially and transferred to another user.
+
+Without this we would have needed to transfer the ownership of the entire contract account to another address which isn’t ideal. We also used OpenZeppelin’s Enumerable ERC721 for reference.
+
+OneSave is live and deployed on the following networks:
+
+1. Arbitrum One Goerli
+2. Base Goerli
+3. Celo Alfa Jores
+4. Gnosis Chiado
+5. Linea Goerli
+6. Mantle Testnet
+7. Polygon Mumbai, zkEVM Testnet and PoS
+8. Scroll Sepolia
