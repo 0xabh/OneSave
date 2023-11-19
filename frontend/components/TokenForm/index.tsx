@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import erc6551RegistryABI from "utils/erc6551RegistryABI.json";
 import erc6551ABI from "utils/erc6551ABI.json";
 import axios from "axios";
+import { fetchTokenDetails } from "utils/tokenDetails";
 
 const TokenForm = () => {
   const router = useRouter();
@@ -114,13 +115,15 @@ const TokenForm = () => {
     const data = {
       id: tokenId,
       tbaAddress: tbaAddress,
-      tokenName,
-      goalAmount,
+      token: tokenName,
+      tokenAddress: fetchTokenDetails(tokenName).address, 
+      goalTarget: goalAmount,
       endDate,
       recoveryAddressCheck,
       recoveryAddress,
       inactivityPeriod,
     };
+    console.log(data, 'data');
     const dataArr = JSON.parse(localStorage.getItem("vaultDetails") || "[]");
     localStorage.setItem("vaultDetails", JSON.stringify([...dataArr, data]));
 
@@ -141,6 +144,8 @@ const TokenForm = () => {
     { name: "WBTC" },
     { name: "ETH" },
   ];
+
+
 
   return (
     <form

@@ -23,3 +23,19 @@ export const WETH = {
     decimals: 18,
     symbol: "WETH"
 }
+
+
+export const fetchTokenDetails = (tokenName: string) => {
+    switch (tokenName) {
+        case 'USDC':
+            return USDC;
+        case 'DAI':
+            return DAI;
+        case 'WBTC':
+            return WBTC;
+        case 'WETH':
+            return WETH;
+        default:
+            return USDC;
+    }
+}

@@ -1,19 +1,46 @@
 import { Switch, Dialog } from "@headlessui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useEthersSigner } from "utils/useEthersSigner";
+import erc6551ABI from "utils/erc6551ABI.json";
+import { BigNumber, ethers } from "ethers";
+import erc20ABI from "utils/erc20ABI.json";
+import { provider } from "utils/balanceFetch";
+import oneSaveNFTAbi from "utils/oneSaveNFTAbi.json";
+import { useAccount } from "wagmi";
+import oneSaveFactoryABI from "utils/oneSaveFactoryABI.json";
+import oneSaveABI from "utils/oneSaveABI.json";
 
 const VaultCard = ({
+  id,
   dollarValue,
+  tbaAddress,
+  tokenAddress,
   token,
   goalTarget,
   endDate,
+  recoveryAddressCheck,
+  recoveryAddress,
+  inactivityPeriod,
 }: {
+  id: string;
   dollarValue: number;
+  tbaAddress: string;
+  tokenAddress: string;
   token: string;
   goalTarget: number;
   endDate: string;
+  recoveryAddressCheck: string;
+  recoveryAddress: string;
+  inactivityPeriod: string;
 }) => {
+
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
   const [isRedeemModalOpen, setIsRedeemModalOpen] = useState(false);
+  const signer = useEthersSigner();
+  const [AA_address, setAA_address] = useState(ethers.constants.AddressZero);
+  const {address, isConnected} = useAccount();
+
+  const [balanceOfTBA, setBalanceOfTBA] = useState<number>();
 
   const [transferAddress, setTransferAddress] = useState<string>();
 
@@ -34,6 +61,92 @@ const VaultCard = ({
   };
   const [enabled, setEnabled] = useState(false);
   const progress = (dollarValue / goalTarget) * 100;
+  const [loading, setLoading] = useState(true);
+  const fetchBalanceOfTBA = async () => {
+    setLoading(true);
+    // const tbaContract = new ethers.Contract(
+    //   tbaAddress,
+    //   erc6551ABI,
+    //   signer
+    // );
+    // const balance = await tbaContract.balanceOf();
+    try {
+      const ERC20Contract = new ethers.Contract(
+        tokenAddress,
+        erc20ABI,
+        provider
+      );
+  
+      const balance = await ERC20Contract.balanceOf(tbaAddress);
+  
+      console.log(balance, "balance");
+      setBalanceOfTBA(balance);
+      setLoading(false);
+    } catch (error) {
+      console.log(error, "error");
+      setLoading(false);
+    }
+  }
+
+  const transferTBA = async () => {
+    // const tbaContract = new ethers.Contract(
+    //   tbaAddress,
+    //   erc6551ABI,
+    //   signer
+    // );
+    // const transfer = await tbaContract.transfer(
+    //   transferAddress,
+    //   balanceOfTBA
+    // );
+    // console.log(transfer, "transfer");
+    const nftContract = new ethers.Contract(
+      '0x2055Fef483E16db322a3D04ECe2454C5dc3b7E49',
+      oneSaveNFTAbi,
+      signer
+    );
+    const encodeTransfer = nftContract.interface.encodeFunctionData(
+      "transferFrom",
+      [AA_address, transferAddress, id]
+    );
+    
+    const AAContract = new ethers.Contract(
+      AA_address,
+      oneSaveABI,
+      signer
+    );
+      const transfer = await AAContract.execute('0x2055Fef483E16db322a3D04ECe2454C5dc3b7E49', BigNumber.from(0), encodeTransfer);
+    // const transfer = await nftContract.transferFrom(
+    //   AA_address,
+    //   transferAddress,
+    //   id
+    // );
+    await transfer.wait();
+    const fetchLocalData = JSON.parse(localStorage.getItem("vaultDetails") || "[]");
+    const filteredData = fetchLocalData.filter((data: any) => data.id != id);
+    localStorage.setItem("vaultDetails", JSON.stringify(filteredData));
+    console.log(transfer, "transfer");
+  }
+ 
+  useEffect(() => {
+    const setAddress = async () => {
+      if (!address) setAA_address(ethers.constants.AddressZero);
+      const AAContract = new ethers.Contract(
+        "0x2902eD2A71B56645761d0190cb7E8A615A86F20c",
+        oneSaveFactoryABI,
+        signer
+      );
+      
+      const create2Address = await AAContract.getAddress(address, 0);
+      setAA_address(create2Address);
+      console.log("AA address:", create2Address);
+    };
+    setAddress();
+  }, [address, isConnected]);
+  useEffect(() => {
+    console.log(tokenAddress, "tokenAddress", tbaAddress, "tbaAddress");
+    fetchBalanceOfTBA()
+  }, []);
+
   return (
     <div className="bg-white border-r-4 border-b-4 border-l border-t border-black h-[300px] w-[300px]">
       <div className="flex justify-end p-3">
@@ -53,7 +166,8 @@ const VaultCard = ({
         </Switch>
       </div>
       <div className="text-black text-center text-2xl font-medium font-sans">
-        ${dollarValue}
+
+        ${ !loading && ((token == "USDC") ? ethers.utils.formatUnits(BigNumber.from(balanceOfTBA), 6) : (token == "DAI") ? ethers.utils.formatUnits(BigNumber.from(balanceOfTBA), 18) : dollarValue) }
       </div>
       <div className="h-2 bg-white border border-black mt-4 w-2/3 mx-auto">
         <div
@@ -123,7 +237,12 @@ const VaultCard = ({
                   <button
                     type="submit"
                     className="text-black text-2xl font-normal font-sans"
-                    onClick={closeTransferModal}
+                    onClick={ (e) => {
+                      e.preventDefault();
+                      transferTBA().then(() => {
+                        closeTransferModal()
+                      })
+                    }}
                   >
                     Transfer
                   </button>
