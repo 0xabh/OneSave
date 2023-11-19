@@ -19,7 +19,7 @@ export default async function handler(
 ) {
   try {
     const oneSave = new ethers.Contract(
-      "0x2055Fef483E16db322a3D04ECe2454C5dc3b7E49",
+      "0x64A4103aef5ac3043626C6e6975DC66b563C6c99",
       oneSaveNFTAbi,
       wallet
     );

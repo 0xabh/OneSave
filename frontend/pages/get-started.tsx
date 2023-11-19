@@ -18,7 +18,7 @@ export default function Home() {
     const setAddress = async () => {
       if (!address) setAA_address(ethers.constants.AddressZero);
       const AAContract = new ethers.Contract(
-        "0x2902eD2A71B56645761d0190cb7E8A615A86F20c",
+        "0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe",
         oneSaveFactoryABI,
         signer
       );

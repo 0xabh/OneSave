@@ -18,7 +18,7 @@ export default function Home() {
   const checkIfBalanceExists = async () => {
     try {
       const AAContract = new ethers.Contract(
-        "0x2902eD2A71B56645761d0190cb7E8A615A86F20c",
+        "0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe",
         oneSaveFactoryABI,
         signer
       );
@@ -30,7 +30,7 @@ export default function Home() {
       );
       console.log("Owner:", await simpleAccount.owner());
       const oneSaveNft = new ethers.Contract(
-        "0x2055Fef483E16db322a3D04ECe2454C5dc3b7E49",
+        "0x64A4103aef5ac3043626C6e6975DC66b563C6c99",
         oneSaveNFTAbi,
         signer
       );

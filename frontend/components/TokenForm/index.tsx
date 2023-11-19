@@ -14,6 +14,7 @@ import erc6551ABI from "utils/erc6551ABI.json";
 import axios from "axios";
 import { fetchTokenDetails } from "utils/tokenDetails";
 
+
 const TokenForm = () => {
   const router = useRouter();
   const [tokenName, setTokenName] = useState("");
@@ -50,7 +51,7 @@ const TokenForm = () => {
   };
   const createVault = async () => {
     const AAContract = new ethers.Contract(
-      "0x2902eD2A71B56645761d0190cb7E8A615A86F20c",
+      "0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe",
       oneSaveFactoryABI,
       signer
     );
@@ -73,7 +74,7 @@ const TokenForm = () => {
     await generateVault(create2Address);
 
     const oneSaveNft = new ethers.Contract(
-      "0x2055Fef483E16db322a3D04ECe2454C5dc3b7E49",
+      "0x64A4103aef5ac3043626C6e6975DC66b563C6c99",
       oneSaveNFTAbi,
       signer
     );
@@ -90,7 +91,7 @@ const TokenForm = () => {
     );
 
     const tbaAddress = await erc6551RegistryContract.account(
-      "0x060b0F0364Bdb754c912f513A42924608657D78E",
+      "0x42a0Eb96aB1E3eB0A570486e1f3bA5b13Bc7a209",
       ethers.utils.formatBytes32String(tokenId.toString()),
       "137",
       oneSaveNft.address,
@@ -170,8 +171,8 @@ const TokenForm = () => {
             <option value="" disabled>
               Select Token
             </option>
-            {tokens.map((token) => (
-              <option value={token.name}>{token.name}</option>
+            {tokens.map((token, index) => (
+              <option key={index} value={token.name}>{token.name}</option>
             ))}
           </select>
           <label

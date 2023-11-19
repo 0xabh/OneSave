@@ -1,6 +1,9 @@
+import { useRouter } from "next/router";
+
 const Logo = () => {
+    const router = useRouter();
     return (
-        <div className="text-black text-[32px] font-medium font-sans">OneSave</div>
+        <div onClick={() => router.push("/dashboard")} className="text-black text-[32px] font-medium font-sans cursor-pointer">OneSave</div>
     )
 }
 
