@@ -1,9 +1,10 @@
-import "@nomiclabs/hardhat-waffle";
-import "@typechain/hardhat";
+// import "@nomiclabs/hardhat-waffle";
+// import "@typechain/hardhat";
 import { HardhatUserConfig } from "hardhat/config";
 import "hardhat-deploy";
 import "@nomiclabs/hardhat-etherscan";
 import "dotenv/config";
+import "hardhat-celo"
 
 import "solidity-coverage";
 
@@ -63,7 +64,7 @@ const config: HardhatUserConfig = {
     },
     baseGoerli: {
       url: "https://goerli.base.org",
-      accounts: [process.env.BASE_PRIVATE_KEY as string],
+      accounts: [process.env.DEPLOYER_PRIVATE_KEY as string],
       gasPrice: 1000000000,
     },
     chiado: {
@@ -82,6 +83,14 @@ const config: HardhatUserConfig = {
       url: `https://rpc.public.zkevm-test.net`,
       accounts: [process.env.DEPLOYER_PRIVATE_KEY as string],
     },
+    arbGoerli: {
+      url: "https://goerli-rollup.arbitrum.io/rpc",
+      accounts: [process.env.DEPLOYER_PRIVATE_KEY as string],
+    },
+    lineaTestnet: {
+      url: "https://linea-testnet.rpc.thirdweb.com",
+      accounts: [process.env.DEPLOYER_PRIVATE_KEY as string],
+    },
     hardhat: {
       forking: {
         url: process.env.ALCHEMY_MUMBAI_API_URL as string,
@@ -96,13 +105,14 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      sepolia: process.env.ETHERSCAN_API_KEY as string,
-      // alfajores: process.env.CELOSCAN_API_KEY as string,
+      // sepolia: process.env.ETHERSCAN_API_KEY as string,
+      alfajores: process.env.CELOSCAN_API_KEY as string,
       scrollSepolia: process.env.SEPOLIA_API_KEY as string,
       mantleTest: process.env.MANTLE_API_KEY as string,
       // polygonMumbai: process.env.POLYGONSCAN_API_KEY as string,
       polygon: process.env.POLYGONSCAN_API_KEY as string,
       baseGoerli: "PLACEHOLDER_STRING",
+      lineaTestnet: process.env.LINEASCAN_API_KEY as string,
     },
     customChains: [
       {
@@ -129,6 +139,14 @@ const config: HardhatUserConfig = {
           browserURL: "https://goerli.basescan.org",
         },
       },
+      {
+        network: "lineaTestnet",
+        chainId: 59140,
+        urls: {
+          apiURL: "https://api-testnet.lineascan.build/api",
+          browserURL: "https://goerli.lineascan.build/address"
+        }
+      }
     ],
   },
 };

@@ -19,16 +19,16 @@ contract OneSave is ERC721, ERC721Enumerable, Ownable {
 
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
         internal
+        override(ERC721, ERC721Enumerable)
     {
-        super._beforeTokenTransfer(from, to, tokenId, 0);
+        super._beforeTokenTransfer(from, to, tokenId);
     }
 
     function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize)
         internal
-        override(ERC721, ERC721Enumerable)
     {
         for (uint256 i = 0; i < batchSize; ++i) {
-            super._beforeTokenTransfer(from, to, firstTokenId + i, 0);
+            super._beforeTokenTransfer(from, to, firstTokenId + i);
         }
     }
 
