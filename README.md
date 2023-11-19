@@ -22,6 +22,9 @@ We use the concept of dead man switch to allow a user to add a wallet address as
 
 Everytime a user completes a transaction with his wallet he will see a popup to sign another transaction that is one percent of the amount sent in the preceding transaction. This recurring transaction is automatically triggered by OneSave and the user can individually approve or reject any transaction as per their decision. 
 
-These small one percent transactions are added to the user’s saving vault irrespective of whether the token transferred by the user is the default token of his vault or not. By using paymaster and gas sponsorship, we convert digital tokens of the user’s transaction to the default token selected for the savings vault at the time of setup. 
+These small one percent transactions are added to the user’s saving vault irrespective of whether the ERC20 token transferred by the user is the default token of his vault or not. By using paymaster and gas sponsorship, we convert digital tokens of the user’s transaction to the default ERC20 token selected for the savings vault at the time of setup. 
 
 Since these savings vault are ERC 6551 token bound accounts they can be transferred to another address by the user or redeemed by the owner. Funds in the savings vault can be redeemed by the owner irrespective of whether the vault has reached its savings goal or maturity date. 
+
+The user retains access to the savings vault and funds at all times as all these 6551 token bound accounts are mapped to his 4337 compatible contract account and it can only be accessed by the owner who created it.
+
