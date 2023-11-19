@@ -4,6 +4,7 @@
 
 | Network | Address |
 | --- | --- |
+| Polygon | [0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe](https://polygonscan.com/address/0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe) |
 | Polygon Mumbai | [0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe](https://mumbai.polygonscan.com/address/0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe) |
 | Celo Alfajores | [0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe](https://alfajores.celoscan.io/address/0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe) |
 | Scroll Seplia | [0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe](https://sepolia.scrollscan.dev/address/0x39d87D951Ce87c173ce403De14d501Bc2Ba29BCe) |
@@ -19,6 +20,7 @@
 
 | Network | Address |
 | --- | --- |
+| Polygon | [0x64A4103aef5ac3043626C6e6975DC66b563C6c99](https://polygonscan.com/address/0x64A4103aef5ac3043626C6e6975DC66b563C6c99) |
 | Polygon Mumbai | [0x64A4103aef5ac3043626C6e6975DC66b563C6c99](https://mumbai.polygonscan.com/address/0x64A4103aef5ac3043626C6e6975DC66b563C6c99) |
 | Celo Alfajores | [0x64A4103aef5ac3043626C6e6975DC66b563C6c99](https://alfajores.celoscan.io/address/0x64A4103aef5ac3043626C6e6975DC66b563C6c99) |
 | Scroll Seplia | [0x64A4103aef5ac3043626C6e6975DC66b563C6c99](https://sepolia.scrollscan.dev/address/0x64A4103aef5ac3043626C6e6975DC66b563C6c99) |
@@ -34,6 +36,7 @@
 
 | Network | Address |
 | --- | --- |
+| Polygon | [0x000000006551c19487814612e58FE06813775758](https://polygonscan.com/address/0x000000006551c19487814612e58FE06813775758) |
 | Polygon Mumbai | [0x000000006551c19487814612e58FE06813775758](https://mumbai.polygonscan.com/address/0x000000006551c19487814612e58FE06813775758) |
 | Celo Alfajores | [0x000000006551c19487814612e58FE06813775758](https://alfajores.celoscan.io/address/0x000000006551c19487814612e58FE06813775758) |
 | Scroll Seplia | [0x000000006551c19487814612e58FE06813775758](https://sepolia.scrollscan.dev/address/0x000000006551c19487814612e58FE06813775758) |
@@ -49,6 +52,7 @@
 
 | Network | Address |
 | --- | --- |
+| Polygon | [0x42a0Eb96aB1E3eB0A570486e1f3bA5b13Bc7a209](https://polygonscan.com/address/0x42a0Eb96aB1E3eB0A570486e1f3bA5b13Bc7a209) |
 | Polygon Mumbai | [0x42a0Eb96aB1E3eB0A570486e1f3bA5b13Bc7a209](https://mumbai.polygonscan.com/address/0x42a0Eb96aB1E3eB0A570486e1f3bA5b13Bc7a209) |
 | Celo Alfajores | [0x42a0Eb96aB1E3eB0A570486e1f3bA5b13Bc7a209](https://alfajores.celoscan.io/address/0x42a0Eb96aB1E3eB0A570486e1f3bA5b13Bc7a209) |
 | Scroll Seplia | [0x42a0Eb96aB1E3eB0A570486e1f3bA5b13Bc7a209](https://sepolia.scrollscan.dev/address/0x42a0Eb96aB1E3eB0A570486e1f3bA5b13Bc7a209) |

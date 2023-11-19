@@ -5,7 +5,7 @@ import { walletConnectProvider, EIP6963Connector } from '@web3modal/wagmi'
 
 import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
-import { arbitrum, mainnet, neonDevnet, optimism, polygon, polygonMumbai, polygonZkEvm, polygonZkEvmTestnet, sepolia, celoAlfajores, linea, gnosisChiado, scrollSepolia, baseGoerli } from 'viem/chains'
+import { arbitrumGoerli, mainnet, neonDevnet, optimism, polygon, polygonMumbai, polygonZkEvm, polygonZkEvmTestnet, sepolia, celoAlfajores, lineaTestnet, gnosisChiado, scrollSepolia, baseGoerli, mantaTestnet } from 'viem/chains'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
@@ -15,7 +15,7 @@ const projectId = 'fc1433467c177c08a08e48d4c17b60e4'
 
 // 2. Create wagmiConfig
 const { chains, publicClient } = configureChains(
-  [polygon, polygonMumbai, polygonZkEvm, polygonZkEvmTestnet, arbitrum, neonDevnet, celoAlfajores, linea, gnosisChiado, scrollSepolia, baseGoerli],
+  [polygon, polygonMumbai, polygonZkEvmTestnet, arbitrumGoerli, neonDevnet, celoAlfajores, lineaTestnet, gnosisChiado, scrollSepolia, baseGoerli, mantaTestnet],
   [walletConnectProvider({ projectId }), publicProvider()]
 )
 
